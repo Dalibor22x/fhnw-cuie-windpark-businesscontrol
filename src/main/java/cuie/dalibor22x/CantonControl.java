@@ -1,15 +1,11 @@
 package cuie.dalibor22x;
 
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.text.Font;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -30,15 +26,7 @@ public class CantonControl extends Control {
         }
     };
 
-    private final BooleanProperty invalidCaption = new SimpleBooleanProperty() {
-        @Override
-        protected void invalidated() {
-            super.invalidated();
-            pseudoClassStateChanged(INVALID_CLASS, get());
-        }
-    };
-
-    private final BooleanProperty invalidTime = new SimpleBooleanProperty() {
+    private final BooleanProperty invalidCanton = new SimpleBooleanProperty() {
         @Override
         protected void invalidated() {
             super.invalidated();
@@ -54,18 +42,18 @@ public class CantonControl extends Control {
         }
     };
 
-    private final BooleanProperty editableTime = new SimpleBooleanProperty();
-    private final BooleanProperty editableCaption = new SimpleBooleanProperty();
+    private final BooleanProperty editableCanton = new SimpleBooleanProperty();
     private final StringProperty userFacingString = new SimpleStringProperty();
     private final ObjectProperty<Canton> actualCanton = new SimpleObjectProperty<>();
-    private final StringProperty caption = new SimpleStringProperty();
     private final StringProperty label = new SimpleStringProperty();
-    private final ObservableList<BacklogEntry> backlog = FXCollections.observableArrayList();
 
 
     private static final String CONVERTIBLE_REGEX = "^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}";
     private static final Pattern CONVERTIBLE_PATTERN = Pattern.compile(CONVERTIBLE_REGEX);
     private List<Canton> cantons;
+
+    private static final int mapHeight = 605;
+    private static final int mapWidth = 935;
 
 
 
@@ -92,17 +80,17 @@ public class CantonControl extends Control {
         userFacingString.addListener((observable, oldValue, newValue) -> {
             if (CONVERTIBLE_PATTERN.matcher(newValue).matches()) {
                 setConvertible(true);
-                setInvalidTime(false);
+                setInvalidCanton(false);
             } else {
-                setInvalidTime(true);
+                setInvalidCanton(true);
                 setConvertible(false);
             }
         });
-        caption.addListener((observable, oldValue, newValue) -> {
-            if (mandatory.get() && "".equals(caption.get())) {
-                setInvalidCaption(true);
+        actualCanton.addListener((observable, oldValue, newValue) -> {
+            if (mandatory.get() && actualCanton.get() != null) {
+                setInvalidCanton(true);
             } else {
-                setInvalidCaption(false);
+                setInvalidCanton(false);
             }
         });
 
@@ -129,32 +117,24 @@ public class CantonControl extends Control {
         if (!isConvertible()) {
             return;
         }
+        boolean wasConverted = false;
 
         for (Canton canton : cantons) {
             if (canton.getShortName().equals(getUserFacingString())) {
                 setActualCanton(canton);
+                wasConverted = true;
                 break;
             } else if (canton.getName().startsWith(getUserFacingString())) {
                 setActualCanton(canton);
-                break;
-            }
-        }
-    }
-
-    public void addToBacklog(String caption, LocalTime time) {
-        if (mandatory.get() && "".equals(caption)) return;
-
-        BacklogEntry newEntry = new BacklogEntry(caption, time);
-        boolean isUnique = true;
-
-        for (BacklogEntry e : backlog) {
-            if (e.equals(newEntry)) {
-                isUnique = false;
+                wasConverted = true;
                 break;
             }
         }
 
-        if (isUnique) backlog.add(newEntry);
+        if (!wasConverted) {
+            setConvertible(false);
+            setInvalidCanton(true);
+        }
     }
 
     public void reset() {
@@ -163,59 +143,47 @@ public class CantonControl extends Control {
 
     private void setupCantons() {
         cantons = new LinkedList<>();
-        cantons.add(new Canton("BE", "Bern", "", "coats-of-arms/Wappen_Bern_matt.svg"));
-        cantons.add(new Canton("ZU", "Zürich", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("LU", "Luzern", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("UR", "Uri", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("SZ", "Schwyz", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("OW", "Obwalden", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("NW", "Nidwalden", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("GL", "Glarus", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("ZG", "Zug", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("FR", "Freiburg", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("SO", "Solothurn", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("BS", "Basel-Stadt", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("BL", "Basel-Landschaft", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("SH", "Schaffhausen", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("AR", "Appenzell Ausserrhoden", "Appenzell A.Rh.", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("AI", "Appenzell Innerrhoden", "Appenzell I.Rh.", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("SG", "Sankt Gallen", "St. Gallen", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("GR", "Graubünden", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("AG", "Aargau", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("TU", "Thurgau", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("TI", "Tessin", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("VD", "Waadt", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("VS", "Wallis", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("NE", "Neuenburg", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("GE", "Genf", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
-        cantons.add(new Canton("JU", "Jura", "", "coats-of-arms/Wappen_Zurich_matt.svg"));
+        cantons.add(new Canton("BE", "Bern", "", "coats-of-arms/Wappen_Bern_matt.svg", "map/BE.svg", 189.9, 152.23));
+        cantons.add(new Canton("ZH", "Zürich", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/ZH.svg", 493.54, 46.68));
+        cantons.add(new Canton("LU", "Luzern", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/LU.svg", 388.49, 168.89));
+        cantons.add(new Canton("UR", "Uri", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/UR.svg", 504.04, 254.83));
+        cantons.add(new Canton("SZ", "Schwyz", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/SZ.svg", 500.77, 186.01));
+        cantons.add(new Canton("OW", "Obwalden", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/OW.svg", 430.74, 260.29));
+        cantons.add(new Canton("NW", "Nidwalden", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/NW.svg", 466.24, 250.75));
+        cantons.add(new Canton("GL", "Glarus", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/GL.svg", 600.05, 200.5));
+        cantons.add(new Canton("ZG", "Zug", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/ZG.svg", 501.69, 180.12));
+        cantons.add(new Canton("FR", "Freiburg", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/FR.svg", 166.13, 253.87));
+        cantons.add(new Canton("SO", "Solothurn", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/SO.svg", 287.46, 105.6));
+        cantons.add(new Canton("BS", "Basel-Stadt", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/BS.svg", 330.71, 56));
+        cantons.add(new Canton("BL", "Basel-Landschaft", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/BL.svg", 284.68, 87.17));
+        cantons.add(new Canton("SH", "Schaffhausen", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/SH.svg", 501.97, 0.05));
+        cantons.add(new Canton("AR", "Appenzell Ausserrhoden", "Appenzell A.Rh.", "coats-of-arms/Wappen_Zurich_matt.svg", "map/AR.svg", 661.98, 109.77));
+        cantons.add(new Canton("AI", "Appenzell Innerrhoden", "Appenzell I.Rh.", "coats-of-arms/Wappen_Zurich_matt.svg", "map/AI.svg", 686.25, 118.75));
+        cantons.add(new Canton("SG", "Sankt Gallen", "St. Gallen", "coats-of-arms/Wappen_Zurich_matt.svg", "map/SG.svg", 582.6, 92.34));
+        cantons.add(new Canton("GR", "Graubünden", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/GR.svg", 556.16, 230.12));
+        cantons.add(new Canton("AG", "Aargau", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/AG.svg", 362.9, 69.74));
+        cantons.add(new Canton("TG", "Thurgau", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/TG.svg", 554.69, 46.15));
+        cantons.add(new Canton("TI", "Tessin", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/TI.svg", 503.44, 362.44));
+        cantons.add(new Canton("VD", "Waadt", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/VD.svg", 24.25, 261.6));
+        cantons.add(new Canton("VS", "Wallis", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/VS.svg", 169.81, 356.29));
+        cantons.add(new Canton("NE", "Neuenburg", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/NE.svg", 102.14, 205.49));
+        cantons.add(new Canton("GE", "Genf", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/GE.svg", 0.58, 442.35));
+        cantons.add(new Canton("JU", "Jura", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/JU.svg", 185.67, 104.81));
     }
 
 
     // Getter and Setter
 
-    public boolean getEditableTime() {
-        return editableTime.get();
+    public boolean getEditableCanton() {
+        return editableCanton.get();
     }
 
-    public BooleanProperty editableTimeProperty() {
-        return editableTime;
+    public BooleanProperty editableCantonProperty() {
+        return editableCanton;
     }
 
-    public void setEditableTime(boolean editableTime) {
-        this.editableTime.set(editableTime);
-    }
-
-    public boolean getEditableCaption() {
-        return editableCaption.get();
-    }
-
-    public BooleanProperty editableCaptionProperty() {
-        return editableCaption;
-    }
-
-    public void setEditableCaption(boolean editableCaption) {
-        this.editableCaption.set(editableCaption);
+    public void setEditableCanton(boolean editableCanton) {
+        this.editableCanton.set(editableCanton);
     }
 
     public String getUserFacingString() {
@@ -242,16 +210,8 @@ public class CantonControl extends Control {
         this.actualCanton.set(actualCanton);
     }
 
-    public String getCaption() {
-        return caption.get();
-    }
-
-    public StringProperty captionProperty() {
-        return caption;
-    }
-
-    public void setCaption(String caption) {
-        this.caption.set(caption);
+    public boolean isInvalidCanton() {
+        return invalidCanton.get();
     }
 
     public static PseudoClass getMandatoryClass() {
@@ -278,28 +238,13 @@ public class CantonControl extends Control {
         this.mandatory.set(mandatory);
     }
 
-    public boolean getInvalidTime() {
-        return invalidTime.get();
+
+    public boolean getInvalidCanton() {
+        return invalidCanton.get();
     }
 
-    public BooleanProperty invalidTimeProperty() {
-        return invalidTime;
-    }
-
-    public void setInvalidTime(boolean invalidTime) {
-        this.invalidTime.set(invalidTime);
-    }
-
-    public boolean getInvalidCaption() {
-        return invalidCaption.get();
-    }
-
-    public BooleanProperty invalidCaptionProperty() {
-        return invalidTime;
-    }
-
-    public void setInvalidCaption(boolean invalidCaption) {
-        this.invalidCaption.set(invalidCaption);
+    public void setInvalidCanton(boolean invalidCanton) {
+        this.invalidCanton.set(invalidCanton);
     }
 
     public boolean isConvertible() {
@@ -326,9 +271,15 @@ public class CantonControl extends Control {
         this.label.set(label);
     }
 
-    public ObservableList<BacklogEntry> getBacklog() {
-        return backlog;
+    public static int getMapHeight() {
+        return mapHeight;
     }
 
+    public static int getMapWidth() {
+        return mapWidth;
+    }
 
+    public List<Canton> getCantons() {
+        return cantons;
+    }
 }

@@ -8,6 +8,7 @@ import javafx.scene.control.SkinBase;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
@@ -15,11 +16,10 @@ import javafx.stage.Popup;
 class CantonSkin extends SkinBase<CantonControl> {
 
     private TextField editableCanton;
-    private Label readOnlyTime;
+    private Label readOnlyCanton;
     private Popup timePopup;
-    private Pane timeDropDownChooser;
-    private Button timeChooserButton;
-    private Button addButton;
+    private Region cantonDropDownMap;
+    private Button cantonChooserButton;
     private Label label;
 
     CantonSkin(CantonControl control) {
@@ -41,44 +41,41 @@ class CantonSkin extends SkinBase<CantonControl> {
     private void initializeParts() {
         editableCanton = new TextField();
         editableCanton.getStyleClass().add("editable-time");
-        editableCanton.setVisible(getSkinnable().getEditableTime());
+        editableCanton.setVisible(getSkinnable().getEditableCanton());
 
-        readOnlyTime = new Label();
-        readOnlyTime.getStyleClass().add("read-only-time");
-        readOnlyTime.setVisible(!getSkinnable().getEditableTime());
+        readOnlyCanton = new Label();
+        readOnlyCanton.getStyleClass().add("read-only-time");
+        readOnlyCanton.setVisible(!getSkinnable().getEditableCanton());
 
         label = new Label();
         label.getStyleClass().add("heading");
 
-        addButton = new Button("Add");
-        addButton.getStyleClass().add("add-button");
-
-        timeChooserButton = new Button("\u25BC");
-        timeChooserButton.getStyleClass().add("chooserButton");
-        timeDropDownChooser = new TimeDropDownChooser(getSkinnable());
+        cantonChooserButton = new Button("\u25BC");
+        cantonChooserButton.getStyleClass().add("chooserButton");
+        cantonDropDownMap = new CantonDropDownMap(getSkinnable(), CantonControl.getMapHeight(), CantonControl.getMapWidth());
         timePopup = new Popup();
 
 
-        timeChooserButton.setVisible(getSkinnable().getEditableTime());
-        timeDropDownChooser.setVisible(getSkinnable().getEditableTime());
+        cantonChooserButton.setVisible(getSkinnable().getEditableCanton());
+        cantonDropDownMap.setVisible(getSkinnable().getEditableCanton());
     }
 
     private void layoutParts() {
-        StackPane timePane = new StackPane(editableCanton, readOnlyTime, timeChooserButton);
-        StackPane.setAlignment(readOnlyTime, Pos.CENTER_LEFT);
-        StackPane.setAlignment(timeChooserButton, Pos.CENTER_RIGHT);
+        StackPane timePane = new StackPane(editableCanton, readOnlyCanton, cantonChooserButton);
+        StackPane.setAlignment(readOnlyCanton, Pos.CENTER_LEFT);
+        StackPane.setAlignment(cantonChooserButton, Pos.CENTER_RIGHT);
 
-        VBox content = new VBox(label, timePane, addButton);
+        VBox content = new VBox(label, timePane);
         content.setSpacing(10);
         getChildren().addAll(content);
 
-        timePopup.getContent().addAll(timeDropDownChooser);
+        timePopup.getContent().addAll(cantonDropDownMap);
     }
 
     private void setupEventHandlers() {
         editableCanton.setOnAction(event -> getSkinnable().convert());
 
-        timeChooserButton.setOnAction(event -> {
+        cantonChooserButton.setOnAction(event -> {
             if (timePopup.isShowing()) {
                 timePopup.hide();
             } else {
@@ -86,12 +83,11 @@ class CantonSkin extends SkinBase<CantonControl> {
             }
         });
 
-        timePopup.setOnHidden(event -> timeChooserButton.setText("\u25BC"));
+        timePopup.setOnHidden(event -> cantonChooserButton.setText("\u25BC"));
 
         timePopup.setOnShown(event -> {
-            timeChooserButton.setText("\u25B2");
-            Point2D location = editableCanton.localToScreen(
-                    editableCanton.getWidth() - timeDropDownChooser.getPrefWidth() - 3, editableCanton.getHeight() - 3);
+            cantonChooserButton.setText("\u25B2");
+            Point2D location = editableCanton.localToScreen(editableCanton.getWidth() - cantonDropDownMap.getPrefWidth() - 3, editableCanton.getHeight() - 3);
             timePopup.setX(location.getX());
             timePopup.setY(location.getY());
         });
@@ -109,26 +105,25 @@ class CantonSkin extends SkinBase<CantonControl> {
     }
 
     private void setupValueChangeListeners() {
-        getSkinnable().editableTimeProperty().addListener((observable, oldValue, newValue) -> {
+        getSkinnable().editableCantonProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 editableCanton.setVisible(true);
-                readOnlyTime.setVisible(false);
-                timeChooserButton.setVisible(true);
-                timeDropDownChooser.setVisible(true);
-
+                readOnlyCanton.setVisible(false);
+                cantonChooserButton.setVisible(true);
+                cantonDropDownMap.setVisible(true);
             } else {
                 editableCanton.setVisible(false);
-                readOnlyTime.setVisible(true);
-                timeChooserButton.setVisible(false);
-                timeDropDownChooser.setVisible(false);
+                readOnlyCanton.setVisible(true);
+                cantonChooserButton.setVisible(false);
+                cantonDropDownMap.setVisible(false);
             }
         });
+
+        getSkinnable().actualCantonProperty().addListener((observable, oldValue, newValue) -> readOnlyCanton.setText(getSkinnable().getActualCanton().getName()));
     }
 
     private void setupBindings() {
         editableCanton.textProperty().bindBidirectional(getSkinnable().userFacingStringProperty());
-
-        readOnlyTime.textProperty().bind(getSkinnable().actualCantonProperty().asString());
 
         label.textProperty().bindBidirectional(getSkinnable().labelProperty());
     }

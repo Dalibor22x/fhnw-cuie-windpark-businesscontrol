@@ -1,22 +1,14 @@
 package cuie.dalibor22x.demo;
 
-import java.time.LocalTime;
-
-import cuie.dalibor22x.BacklogEntry;
 import cuie.dalibor22x.Canton;
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 
 public class PresentationModel {
     private final ObjectProperty<Canton> canton = new SimpleObjectProperty<>();
-    private final StringProperty label = new SimpleStringProperty("Work Tracker");
-    private final StringProperty caption = new SimpleStringProperty("Project xy");
+    private final StringProperty label = new SimpleStringProperty("Canton");
     private final BooleanProperty mandatory = new SimpleBooleanProperty(true);
-    private final BooleanProperty readOnlyTime = new SimpleBooleanProperty(false);
-    private final BooleanProperty readOnlyCaption = new SimpleBooleanProperty(false);
-    private final ObservableList<BacklogEntry> backlog = FXCollections.observableArrayList();
+    private final BooleanProperty readOnlyCanton = new SimpleBooleanProperty(false);
 
     public Canton getCanton() {
         return canton.get();
@@ -54,43 +46,15 @@ public class PresentationModel {
         this.mandatory.set(mandatory);
     }
 
-    public boolean getReadOnlyTime() {
-        return readOnlyTime.get();
+    public boolean isReadOnlyCanton() {
+        return readOnlyCanton.get();
     }
 
-    public BooleanProperty readOnlyTimeProperty() {
-        return readOnlyTime;
+    public BooleanProperty readOnlyCantonProperty() {
+        return readOnlyCanton;
     }
 
-    public void setReadOnlyTime(boolean readOnlyTime) {
-        this.readOnlyTime.set(readOnlyTime);
+    public void setReadOnlyCanton(boolean readOnlyCanton) {
+        this.readOnlyCanton.set(readOnlyCanton);
     }
-    public boolean getReadOnlyCaption() {
-        return readOnlyCaption.get();
-    }
-
-    public BooleanProperty readOnlyCaptionProperty() {
-        return readOnlyCaption;
-    }
-
-    public void setReadOnlyCaption(boolean readOnlyCaption) {
-        this.readOnlyCaption.set(readOnlyCaption);
-    }
-
-    public String getCaption() {
-        return caption.get();
-    }
-
-    public StringProperty captionProperty() {
-        return caption;
-    }
-
-    public void setCaption(String caption) {
-        this.caption.set(caption);
-    }
-
-    public ObservableList<BacklogEntry> getBacklog() {
-        return backlog;
-    }
-
 }
