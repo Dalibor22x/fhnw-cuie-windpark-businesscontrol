@@ -120,11 +120,11 @@ public class CantonControl extends Control {
         boolean wasConverted = false;
 
         for (Canton canton : cantons) {
-            if (canton.getShortName().equals(getUserFacingString())) {
+            if (canton.getShortName().toLowerCase().equals(getUserFacingString().toLowerCase())) {
                 setActualCanton(canton);
                 wasConverted = true;
                 break;
-            } else if (canton.getName().startsWith(getUserFacingString())) {
+            } else if (canton.getName().toLowerCase().startsWith(getUserFacingString().toLowerCase())) {
                 setActualCanton(canton);
                 wasConverted = true;
                 break;
