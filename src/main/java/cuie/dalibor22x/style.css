@@ -1,56 +1,41 @@
-.time-control {
+.canton-control {
     -base-color: black;
     -fx-background-color: white;
     -fx-font-family: "Roboto Light";
 }
 
-.time-control .heading {
+.canton-control .heading {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
     -fx-font-family: "Roboto Bold";
 }
 
-.time-control .editable-time,
-.time-control .editable-caption {
+.canton-control .editable-canton {
     -fx-border-color: #a1a1a1;
     -fx-border-radius: 5px;
 }
 
-.time-control:mandatory .editable-time,
-.time-control:mandatory .editable-caption {
+.canton-control:mandatory .editable-canton {
+    -fx-border-color: gray;
+}
+.canton-control:mandatory .editable-canton {
     -fx-border-color: black;
 }
 
-.time-control:invalid .editable-time,
-.time-control:invalid .editable-caption {
+.canton-control:invalid .editable-canton {
     -fx-border-color: red;
 }
 
-.time-control:convertible .editable-time {
+.canton-control:convertible .editable-canton {
     -fx-border-color: green;
 }
 
-.time-control .read-only-time,
-.time-control .read-only-caption {
+.canton-control .read-only-canton {
     -fx-font-size: 22px;
     -fx-color: #a1a1a1;
 }
 
 
-.time-control .chooserButton {
+.canton-control .chooserButton {
     -fx-background-color: transparent;
-}
-
-.time-control .add-button {
-    -fx-background-color: white;
-    -fx-border-color: black;
-    -fx-border-radius: 5px;
-}
-
-.time-control .add-button:hover {
-    -fx-background-color: #f1f1f1;
-}
-
-.time-control .add-button:pressed {
-    -fx-background-color: #dedede;
 }

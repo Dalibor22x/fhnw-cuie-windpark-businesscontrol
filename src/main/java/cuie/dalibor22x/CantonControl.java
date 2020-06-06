@@ -70,7 +70,7 @@ public class CantonControl extends Control {
     }
 
     private void initializeSelf() {
-        getStyleClass().add("time-control");
+        getStyleClass().add("canton-control");
 
         setupCantons();
     }

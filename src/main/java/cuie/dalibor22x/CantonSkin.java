@@ -39,11 +39,11 @@ class CantonSkin extends SkinBase<CantonControl> {
 
     private void initializeParts() {
         editableCanton = new TextField();
-        editableCanton.getStyleClass().add("editable-time");
+        editableCanton.getStyleClass().add("editable-canton");
         editableCanton.setVisible(getSkinnable().getEditableCanton());
 
         readOnlyCanton = new Label();
-        readOnlyCanton.getStyleClass().add("read-only-time");
+        readOnlyCanton.getStyleClass().add("read-only-canton");
         readOnlyCanton.setVisible(!getSkinnable().getEditableCanton());
 
         label = new Label();
