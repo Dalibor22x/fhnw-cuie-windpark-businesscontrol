@@ -54,7 +54,6 @@ class CantonSkin extends SkinBase<CantonControl> {
         cantonDropDownMap = new CantonDropDownMap(getSkinnable(), CantonControl.getMapHeight(), CantonControl.getMapWidth());
         mapPopup = new Popup();
 
-
         cantonChooserButton.setVisible(getSkinnable().getEditableCanton());
         cantonDropDownMap.setVisible(getSkinnable().getEditableCanton());
     }
@@ -92,14 +91,13 @@ class CantonSkin extends SkinBase<CantonControl> {
         });
 
         editableCanton.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-
             switch (event.getCode()) {
                 case ESCAPE:
                     getSkinnable().reset();
                     event.consume();
                     break;
             }
-            });
+        });
     }
 
     private void setupValueChangeListeners() {
