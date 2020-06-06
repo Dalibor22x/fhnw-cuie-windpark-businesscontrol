@@ -138,6 +138,7 @@ public class CantonControl extends Control {
     }
 
     public void reset() {
+        setUserFacingString("");
     }
 
 
