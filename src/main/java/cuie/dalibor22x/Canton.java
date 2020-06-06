@@ -1,6 +1,12 @@
 package cuie.dalibor22x;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class Canton {
 
@@ -11,8 +17,12 @@ public class Canton {
     private final File mapElement;
     private final double xPosition;
     private final double yPosition;
+    private final double height;
+    private final double width;
 
-    public Canton(String shortName, String name, String nameAbbreviation, File coatOfArms, String mapElementPath, double xPosition, double yPosition) {
+    private final ImageView imageView;
+
+    public Canton(String shortName, String name, String nameAbbreviation, File coatOfArms, String mapElementPath, double xPosition, double yPosition, double height, double width) {
         this.shortName = shortName;
         this.name = name;
         this.nameAbbreviation = nameAbbreviation;
@@ -20,9 +30,13 @@ public class Canton {
         this.mapElement = new File(getClass().getClassLoader().getResource(mapElementPath).getFile());
         this.xPosition = xPosition;
         this.yPosition = yPosition;
+        this.height = height;
+        this.width = width;
+        imageView = new ImageView();
+        setupImageView();
     }
 
-    public Canton(String shortName, String name, String nameAbbreviation, String coatOfArmsPath, String mapElementPath, double xPosition, double yPosition) {
+    public Canton(String shortName, String name, String nameAbbreviation, String coatOfArmsPath, String mapElementPath, double xPosition, double yPosition, double height, double width) {
         this.shortName = shortName;
         this.name = name;
         this.nameAbbreviation = nameAbbreviation;
@@ -30,6 +44,26 @@ public class Canton {
         this.mapElement = new File(getClass().getClassLoader().getResource(mapElementPath).getFile());
         this.xPosition = xPosition;
         this.yPosition = yPosition;
+        this.height = height;
+        this.width = width;
+        imageView = new ImageView();
+        setupImageView();
+    }
+
+    private void setupImageView() {
+        try {
+            URL url = getMapElement().toURI().toURL();
+            imageView.setImage(new Image(url.toString(), getWidth(), getHeight(), true, true));
+            imageView.setLayoutX(getxPosition());
+            imageView.setLayoutY(getyPosition());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public ImageView getImageView() {
+        return imageView;
     }
 
     public String getShortName() {
@@ -58,5 +92,13 @@ public class Canton {
 
     public double getyPosition() {
         return yPosition;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public double getWidth() {
+        return width;
     }
 }

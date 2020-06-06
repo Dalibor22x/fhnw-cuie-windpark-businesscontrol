@@ -143,32 +143,58 @@ public class CantonControl extends Control {
 
     private void setupCantons() {
         cantons = new LinkedList<>();
-        cantons.add(new Canton("BE", "Bern", "", "coats-of-arms/Wappen_Bern_matt.svg", "map/BE.svg", 189.9, 152.23));
-        cantons.add(new Canton("ZH", "Zürich", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/ZH.svg", 493.54, 46.68));
-        cantons.add(new Canton("LU", "Luzern", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/LU.svg", 388.49, 168.89));
-        cantons.add(new Canton("UR", "Uri", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/UR.svg", 504.04, 254.83));
-        cantons.add(new Canton("SZ", "Schwyz", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/SZ.svg", 500.77, 186.01));
-        cantons.add(new Canton("OW", "Obwalden", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/OW.svg", 430.74, 260.29));
-        cantons.add(new Canton("NW", "Nidwalden", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/NW.svg", 466.24, 250.75));
-        cantons.add(new Canton("GL", "Glarus", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/GL.svg", 600.05, 200.5));
-        cantons.add(new Canton("ZG", "Zug", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/ZG.svg", 501.69, 180.12));
-        cantons.add(new Canton("FR", "Freiburg", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/FR.svg", 166.13, 253.87));
-        cantons.add(new Canton("SO", "Solothurn", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/SO.svg", 287.46, 105.6));
-        cantons.add(new Canton("BS", "Basel-Stadt", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/BS.svg", 330.71, 56));
-        cantons.add(new Canton("BL", "Basel-Landschaft", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/BL.svg", 284.68, 87.17));
-        cantons.add(new Canton("SH", "Schaffhausen", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/SH.svg", 501.97, 0.05));
-        cantons.add(new Canton("AR", "Appenzell Ausserrhoden", "Appenzell A.Rh.", "coats-of-arms/Wappen_Zurich_matt.svg", "map/AR.svg", 661.98, 109.77));
-        cantons.add(new Canton("AI", "Appenzell Innerrhoden", "Appenzell I.Rh.", "coats-of-arms/Wappen_Zurich_matt.svg", "map/AI.svg", 686.25, 118.75));
-        cantons.add(new Canton("SG", "Sankt Gallen", "St. Gallen", "coats-of-arms/Wappen_Zurich_matt.svg", "map/SG.svg", 582.6, 92.34));
-        cantons.add(new Canton("GR", "Graubünden", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/GR.svg", 556.16, 230.12));
-        cantons.add(new Canton("AG", "Aargau", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/AG.svg", 362.9, 69.74));
-        cantons.add(new Canton("TG", "Thurgau", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/TG.svg", 554.69, 46.15));
-        cantons.add(new Canton("TI", "Tessin", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/TI.svg", 503.44, 362.44));
-        cantons.add(new Canton("VD", "Waadt", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/VD.svg", 24.25, 261.6));
-        cantons.add(new Canton("VS", "Wallis", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/VS.svg", 169.81, 356.29));
-        cantons.add(new Canton("NE", "Neuenburg", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/NE.svg", 102.14, 205.49));
-        cantons.add(new Canton("GE", "Genf", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/GE.svg", 0.58, 442.35));
-        cantons.add(new Canton("JU", "Jura", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/JU.svg", 185.67, 104.81));
+        cantons.add(new Canton("BE", "Bern", "", "coats-of-arms/Wappen_Bern_matt.svg", "map/pngs/BE.png", 189.9, 152.23,
+                304, 327));
+        cantons.add(new Canton("ZH", "Zürich", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/ZH.png", 493.54, 46.68,
+                160, 128));
+        cantons.add(new Canton("LU", "Luzern", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/LU.png", 388.49, 168.89,
+                155, 139));
+        cantons.add(new Canton("UR", "Uri", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/UR.png", 504.04, 254.83,
+                141, 115));
+        cantons.add(new Canton("SZ", "Schwyz", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/SZ.png", 500.77, 186.01,
+                102, 126));
+        cantons.add(new Canton("OW", "Obwalden", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/OW.png", 430.74, 260.29,
+                70, 97));
+        cantons.add(new Canton("NW", "Nidwalden", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/NW.png", 466.24, 250.75,
+                71, 75));
+        cantons.add(new Canton("GL", "Glarus", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/GL.png", 600.05, 200.5,
+                113, 78));
+        cantons.add(new Canton("ZG", "Zug", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/ZG.png", 501.69, 180.12,
+                50, 63));
+        cantons.add(new Canton("FR", "Freiburg", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/FR.png", 166.13, 253.87,
+                170, 131));
+        cantons.add(new Canton("SO", "Solothurn", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/SO.png", 287.46, 105.6,
+                129, 141));
+        cantons.add(new Canton("BS", "Basel-Stadt", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/BS.png", 330.71, 56,
+                43, 29));
+        cantons.add(new Canton("BL", "Basel-Landschaft", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/BL.png", 284.68, 87.17,
+                69, 130));
+        cantons.add(new Canton("SH", "Schaffhausen", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/SH.png", 501.97, 0.05,
+                87, 95));
+        cantons.add(new Canton("AR", "Appenzell Ausserrhoden", "Appenzell A.Rh.", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/AR.png", 661.98, 109.77,
+                69, 90));
+        cantons.add(new Canton("AI", "Appenzell Innerrhoden", "Appenzell I.Rh.", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/AI.png", 686.25, 118.75,
+                69, 63));
+        cantons.add(new Canton("SG", "Sankt Gallen", "St. Gallen", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/SG.png", 582.6, 92.34,
+                197, 178));
+        cantons.add(new Canton("GR", "Graubünden", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/GR.png", 556.16, 230.12,
+                269, 378));
+        cantons.add(new Canton("AG", "Aargau", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/AG.png", 362.9, 69.74,
+                145, 151));
+        cantons.add(new Canton("TG", "Thurgau", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/TG.png", 554.69, 46.15,
+                96, 165));
+        cantons.add(new Canton("TI", "Tessin", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/TI.png", 503.44, 362.44,
+                242, 161));
+        cantons.add(new Canton("VD", "Waadt", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/VD.png", 24.25, 261.6,
+                225, 245));
+        cantons.add(new Canton("VS", "Wallis", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/VS.png", 169.81, 356.29,
+                240, 352));
+        cantons.add(new Canton("NE", "Neuenburg", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/NE.png", 102.14, 205.49,
+                95, 134));
+        cantons.add(new Canton("GE", "Genf", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/GE.png", 0.58, 442.35,
+                72, 75));
+        cantons.add(new Canton("JU", "Jura", "", "coats-of-arms/Wappen_Zurich_matt.svg", "map/pngs/JU.png", 185.67, 104.81,
+                107, 147));
     }
 
 

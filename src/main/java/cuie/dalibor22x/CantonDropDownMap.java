@@ -1,7 +1,7 @@
 package cuie.dalibor22x;
 
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+
 
 public class CantonDropDownMap extends Region {
     private static final String STYLE_CSS = "dropDownMap.css";
@@ -34,6 +34,7 @@ public class CantonDropDownMap extends Region {
         initializeDrawingPane();
         layoutParts();
         setupValueChangeListeners();
+        setupEventHandlers();
         setupBindings();
     }
 
@@ -44,8 +45,7 @@ public class CantonDropDownMap extends Region {
         getStyleClass().add("dropdown-chooser");
     }
 
-    private void initializeParts() {
-    }
+    private void initializeParts() {}
 
 
     private void initializeDrawingPane() {
@@ -58,24 +58,21 @@ public class CantonDropDownMap extends Region {
 
     private void layoutParts() {
         for (Canton canton : cantonControl.getCantons()) {
-            Pane cantonPane = new Pane();
-//            BackgroundImage cantonImage = new BackgroundImage(new Image(canton.getMapElement().getAbsolutePath(),32,32,true,true),
-//                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-//                    BackgroundSize.DEFAULT);
-//            cantonPane.setBackground(new Background(cantonImage));
+            drawingPane.getChildren().add(canton.getImageView());
+        }
 
-            drawingPane.getChildren().addAll(cantonPane);
+        getChildren().add(drawingPane);
+    }
 
-            cantonPane.setLayoutX(canton.getxPosition());
-            cantonPane.setLayoutY(canton.getyPosition());
+
+    private void setupValueChangeListeners() {}
+
+
+    private void setupEventHandlers() {
+        for (Canton canton : cantonControl.getCantons()) {
+            canton.getImageView().setOnMousePressed((e) -> cantonControl.setActualCanton(canton));
         }
     }
 
-
-    private void setupValueChangeListeners() {
-    }
-
-
-    private void setupBindings() {
-    }
+    private void setupBindings() {}
 }

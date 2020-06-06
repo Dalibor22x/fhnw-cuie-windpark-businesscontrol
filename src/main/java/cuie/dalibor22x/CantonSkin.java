@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SkinBase;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -17,7 +16,7 @@ class CantonSkin extends SkinBase<CantonControl> {
 
     private TextField editableCanton;
     private Label readOnlyCanton;
-    private Popup timePopup;
+    private Popup mapPopup;
     private Region cantonDropDownMap;
     private Button cantonChooserButton;
     private Label label;
@@ -53,7 +52,7 @@ class CantonSkin extends SkinBase<CantonControl> {
         cantonChooserButton = new Button("\u25BC");
         cantonChooserButton.getStyleClass().add("chooserButton");
         cantonDropDownMap = new CantonDropDownMap(getSkinnable(), CantonControl.getMapHeight(), CantonControl.getMapWidth());
-        timePopup = new Popup();
+        mapPopup = new Popup();
 
 
         cantonChooserButton.setVisible(getSkinnable().getEditableCanton());
@@ -61,46 +60,45 @@ class CantonSkin extends SkinBase<CantonControl> {
     }
 
     private void layoutParts() {
-        StackPane timePane = new StackPane(editableCanton, readOnlyCanton, cantonChooserButton);
+        StackPane controlPane = new StackPane(editableCanton, readOnlyCanton, cantonChooserButton);
         StackPane.setAlignment(readOnlyCanton, Pos.CENTER_LEFT);
         StackPane.setAlignment(cantonChooserButton, Pos.CENTER_RIGHT);
 
-        VBox content = new VBox(label, timePane);
+        VBox content = new VBox(label, controlPane);
         content.setSpacing(10);
         getChildren().addAll(content);
 
-        timePopup.getContent().addAll(cantonDropDownMap);
+        mapPopup.getContent().add(cantonDropDownMap);
     }
 
     private void setupEventHandlers() {
         editableCanton.setOnAction(event -> getSkinnable().convert());
 
         cantonChooserButton.setOnAction(event -> {
-            if (timePopup.isShowing()) {
-                timePopup.hide();
+            if (mapPopup.isShowing()) {
+                mapPopup.hide();
             } else {
-                timePopup.show(editableCanton.getScene().getWindow());
+                mapPopup.show(editableCanton.getScene().getWindow());
             }
         });
 
-        timePopup.setOnHidden(event -> cantonChooserButton.setText("\u25BC"));
+        mapPopup.setOnHidden(event -> cantonChooserButton.setText("\u25BC"));
 
-        timePopup.setOnShown(event -> {
+        mapPopup.setOnShown(event -> {
             cantonChooserButton.setText("\u25B2");
             Point2D location = editableCanton.localToScreen(editableCanton.getWidth() - cantonDropDownMap.getPrefWidth() - 3, editableCanton.getHeight() - 3);
-            timePopup.setX(location.getX());
-            timePopup.setY(location.getY());
+            mapPopup.setX(location.getX());
+            mapPopup.setY(location.getY());
         });
 
         editableCanton.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            int caretPos = editableCanton.getCaretPosition();
 
-            switch (event.getCode()){
+            switch (event.getCode()) {
                 case ESCAPE:
                     getSkinnable().reset();
                     event.consume();
                     break;
-                }
+            }
             });
     }
 
