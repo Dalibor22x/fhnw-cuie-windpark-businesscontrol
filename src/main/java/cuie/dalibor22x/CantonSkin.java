@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SkinBase;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -115,7 +117,10 @@ class CantonSkin extends SkinBase<CantonControl> {
             }
         });
 
-        getSkinnable().actualCantonProperty().addListener((observable, oldValue, newValue) -> readOnlyCanton.setText(getSkinnable().getActualCanton().getName()));
+        getSkinnable().actualCantonProperty().addListener((observable, oldValue, newValue) -> {
+            readOnlyCanton.setText(getSkinnable().getActualCanton().getName());
+            cantonChooserButton.setGraphic(new ImageView(new Image(getSkinnable().getActualCanton().getCoatOfArms().toURI().toString(), 20, 20, true ,true)));
+        });
     }
 
     private void setupBindings() {
