@@ -173,6 +173,16 @@ public class CantonControl extends Control {
     }
 
 
+    public Canton getCantonByShortName(String shortName) {
+        for (Canton canton : cantons) {
+            if (canton.getShortName().toLowerCase().equals(shortName.toLowerCase())) {
+                return canton;
+            }
+        }
+
+        return null;
+    }
+
     // Getter and Setter
 
     public boolean getEditableCanton() {
