@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -62,10 +63,11 @@ class CantonSkin extends SkinBase<CantonControl> {
 
     private void layoutParts() {
         StackPane controlPane = new StackPane(editableCanton, readOnlyCanton, cantonChooserButton);
-        StackPane.setAlignment(readOnlyCanton, Pos.CENTER_LEFT);
-        StackPane.setAlignment(cantonChooserButton, Pos.CENTER_RIGHT);
+        StackPane.setAlignment(readOnlyCanton, Pos.TOP_LEFT);
+        StackPane.setAlignment(editableCanton, Pos.TOP_LEFT);
+        StackPane.setAlignment(cantonChooserButton, Pos.TOP_RIGHT);
 
-        VBox content = new VBox(label, controlPane);
+        HBox content = new HBox(label, controlPane);
         content.setSpacing(10);
         getChildren().addAll(content);
 
