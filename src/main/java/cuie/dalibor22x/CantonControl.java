@@ -50,7 +50,7 @@ public class CantonControl extends Control {
 
     private static final String CONVERTIBLE_REGEX = "^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}";
     private static final Pattern CONVERTIBLE_PATTERN = Pattern.compile(CONVERTIBLE_REGEX);
-    private List<Canton> cantons;
+    private static List<Canton> cantons;
 
     private static final int mapHeight = 605;
     private static final int mapWidth = 935;
@@ -142,7 +142,7 @@ public class CantonControl extends Control {
     }
 
 
-    private void setupCantons() {
+    private static void setupCantons() {
         cantons = new LinkedList<>();
         cantons.add(new Canton("BE", "Bern", "", "coats-of-arms/BE.png", "map/pngs/BE.png", 189.9, 152.23, 304, 327));
         cantons.add(new Canton("ZH", "Zürich", "", "coats-of-arms/ZH.png", "map/pngs/ZH.png", 493.54, 46.68, 160, 128));
@@ -173,7 +173,7 @@ public class CantonControl extends Control {
     }
 
 
-    public Canton getCantonByShortName(String shortName) {
+    public static Canton getCantonByShortName(String shortName) {
         for (Canton canton : cantons) {
             if (canton.getShortName().toLowerCase().equals(shortName.toLowerCase())) {
                 return canton;
