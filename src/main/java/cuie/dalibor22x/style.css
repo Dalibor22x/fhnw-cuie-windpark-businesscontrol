@@ -15,7 +15,7 @@
     -fx-border-radius: 5px;
 }
 
-.canton-control:mandatory .editable-canton {
+.canton-control:not(:mandatory) .editable-canton {
     -fx-border-color: gray;
 }
 .canton-control:mandatory .editable-canton {
