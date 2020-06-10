@@ -1,5 +1,12 @@
 == CUIE Abschlussprojekt
 
+=== Bitte beachten:
+Ich habe ein eigenes Repository erstellt für diese Aufgabe, da zum Zeitpunkt als ich angefangen habe, das offizielle Repository noch nicht erstellt wurde.
+
+Dieses Repository ist somit eine Kopie von https://github.com/Dalibor22x/fhnw-cuie-windpark-businesscontrol
+
+Hier findet man nur den neusten Stand, alle Commits sind im original Repository zu finden.
+
 === Bearbeitet von
 
 * Dalibor Simić
